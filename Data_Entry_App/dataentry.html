@@ -1,0 +1,188 @@
+<head>
+<title>Page Title</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<!-- jQuery library -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+</head>
+
+
+
+
+
+
+<div class="container mt-5 mb-5">
+<div class="alert alert-primary">
+<h1 style="text-align:center;"><span  class="badge badge-primary">Data Entry</center></span></h1>
+
+<form>
+<td><h3>EMPLOYEE NAME</h3></td>
+
+  <input type="text"  class="form-control" id="fname" name="fname" required><br>
+  <td><h3>DEPARTMENT NAME</h3></td>
+  
+ <input type="text" class="form-control" id="lname" name="lname" required>
+   <br><br>
+   <button id="Submit" onlick="updated()" class="btn btn-danger" >submit</button>
+  
+  <input type="reset"  class="btn btn-success" value="reset"/>
+</form>
+
+
+
+<table  cellpadding="20px;" cellspacing="5" style="margin-left: auto;
+  margin-right: auto;" border="5" >
+<tr  >
+<thead style="color:white;background-color:black;font-size:25px;text-align:center">
+<th>Serial.No</th>
+
+<th>EMPLOYEE NAME</th>
+<th>DEPARTMENT NAME</th>
+<th >Delete</th>
+<th >Edit</th>
+<th >Update</th>
+</thead></tr>
+<tbody style="color:black;background-color:blue;font-size:30px;font-weight:bold;text-align:center;" class="mytable">
+
+</tbody>
+</table>
+
+
+
+
+
+
+<div class="main">
+
+</div>
+<script>
+
+
+
+var a=document.querySelector("form");
+var b=document.querySelector(".myTable");
+//a.addEventListener("submit", (ele)=>{
+//var fn=ele.target.fname.value;
+//var ln=ele.target.lname.value;
+//console.log(fn,ln);
+//ele.preventDefault();
+//});
+
+
+
+a.addEventListener("submit", myFunction);
+function myFunction(ele) {
+var firsname=ele.target.fname.value;
+var Lastname=ele.target.lname.value;
+
+var checkdata=JSON.parse(localStorage.getItem("data"))??[];
+
+checkdata.push({
+ 'firsname':firsname,
+ 'Lastname':Lastname,
+});
+
+
+
+
+localStorage.setItem("data",JSON.stringify(checkdata));
+showdata();
+//console.log(checkdata);
+ele.preventDefault();
+
+
+}
+var del=(index)=>{
+
+var checkdata=JSON.parse(localStorage.getItem("data"))??[];
+checkdata.splice(index,1);
+localStorage.setItem("data",JSON.stringify(checkdata));
+showdata();
+}
+
+var Edit=(indx)=>{
+
+var checkdata=JSON.parse(localStorage.getItem("data"))??[];
+//checkdata.splice(indx,1,);
+//checkdata.forEach((ee)=>{
+//console.log(ee.firsname);
+//});
+//for(var i=0;i<checkdata.length;i++){
+//var k=document.getElementById("fname").value=checkdata.innerHTML;
+//console.log(checkdata[1].firsname);
+//console.log(checkdata[1].Lastname);
+document.getElementById("fname").value=checkdata[indx].firsname;
+document.getElementById("lname").value=checkdata[indx].Lastname;
+
+
+//showdata();
+
+
+//}
+
+
+}
+var update=(indx)=>{
+var checkdata=JSON.parse(localStorage.getItem("data"))??[];
+checkdata[indx].firsname=document.getElementById("fname").value;
+checkdata[indx].Lastname=document.getElementById("lname").value;
+localStorage.setItem("data",JSON.stringify(checkdata));
+}
+
+
+var showdata=()=>{
+
+var checkdata=JSON.parse(localStorage.getItem("data"))??[];
+
+var user='';
+
+checkdata.forEach((e,i)=>{
+
+ //var table = document.getElementById("myTable");
+ // var row = table.insertRow(0);
+  //var cell1 = row.insertCell(0);
+  //var cell2 = row.insertCell(1);
+  //cell1.innerHTML = e.firsname;
+  //cell2.innerHTML = e.Lastname;
+
+
+//console.log(i);
+//console.log(e.firsname,e.Lastname);
+//user+=e.firsname + e.Lastname });
+
+
+
+user+='<tr><td>'+i+'</td><td>'+e.firsname+'</td><td>'+e.Lastname+'</td><td  onclick="del('+i+')"><button class="btn btn-danger" >Delete</button></td><td onclick="Edit('+i+')"><button class="btn btn-dark" >Edit</button></td><td onclick="update('+i+')"><button class="btn btn-success" >Update</button></td></tr>';
+
+
+
+
+
+b.innerHTML=user;
+//console.log(user);
+//b.innerHTML=(user);
+
+//document.write(user);
+
+
+});
+}
+showdata();
+</script>
+
+
+
+
+
+
